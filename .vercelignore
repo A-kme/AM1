@@ -1,0 +1,14 @@
+node_modules/
+dist/
+.tools/
+.git/
+.vercel/
+.npmrc
+AGENTS.md
+design-qa.md
+AttractiveMen.html
+attractiveme.html
+qa-*.png
+checkout-reference-page-*
+checkout-reference-text.txt
+qoves-checkout-reference.png

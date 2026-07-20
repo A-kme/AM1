@@ -48,3 +48,7 @@ This creates `AttractiveMen.html` in the project root.
 The current Cashfree section is a frontend prototype. A live Cashfree account, secure backend order creation, payment verification and webhook handling are still required before accepting payments.
 
 The checkout currently calculates GST at 18%. Confirm the applicable tax rate before launch.
+
+## Live deployment
+
+Production: https://attractive-men.vercel.app
