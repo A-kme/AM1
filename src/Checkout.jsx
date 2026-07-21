@@ -1,12 +1,9 @@
-import { useEffect, useMemo, useState } from "react";
+﻿import { useEffect, useMemo, useState } from "react";
 import {
-  ArrowLeft,
   Check,
-  CreditCard,
   LockKey,
   PhoneCall,
   ShieldCheck,
-  ShoppingBag,
   Tag,
 } from "@phosphor-icons/react";
 import "./checkout.css";
@@ -23,14 +20,6 @@ const BUMPS = [
     Icon: PhoneCall,
     summary: "Review your report privately with a style expert.",
     details: ["Personal Report Walkthrough", "Fit, Hair & Grooming Q&A", "2 Outfit Photo Reviews"],
-  },
-  {
-    id: "shopping",
-    title: "Personalized Online Shopping Kit",
-    price: 699,
-    Icon: ShoppingBag,
-    summary: "Skip the search with a shortlist built around your budget.",
-    details: ["8 to 12 Direct Product Links", "Size & Fit Notes", "Budget-Based Recommendations"],
   },
 ];
 
@@ -103,7 +92,7 @@ export function CheckoutPage() {
       setStatus("Please check the highlighted fields. Nothing has been charged.");
       return;
     }
-    setStatus("Your details are ready. Connect the live Cashfree account to open secure payment here.");
+    setStatus("Your details are ready. Connect the live payment gateway to open secure payment here.");
   };
 
   const saveForLater = () => {
@@ -117,17 +106,9 @@ export function CheckoutPage() {
 
   return (
     <div className="checkout-page">
-      <header className="checkout-header">
-        <a className="checkout-back" href="?" aria-label="Return to AttractiveMen">
-          <ArrowLeft size={18} /> Back
-        </a>
-        <a className="checkout-brand" href="?">AttractiveMen</a>
-        <span className="checkout-secure"><LockKey size={16} weight="fill" /> Secure checkout</span>
-      </header>
-
       <main className="checkout-main">
         <section className="checkout-intro" aria-labelledby="checkout-title">
-          <p className="checkout-step">Checkout &nbsp;•&nbsp; Assessment &nbsp;•&nbsp; Your report</p>
+          <p className="checkout-step">Checkout &nbsp;&bull;&nbsp; Assessment &nbsp;&bull;&nbsp; Your report</p>
           <h1 id="checkout-title">Complete your order.<br /><span>Start dressing with certainty.</span></h1>
           <p>Your recommendations will be built around your face, body, skin tone, routine and budget.</p>
           <div className="checkout-trust-row">
@@ -141,7 +122,7 @@ export function CheckoutPage() {
           <section className="checkout-block" aria-labelledby="contact-title">
             <div className="checkout-block-heading">
               <span>1</span>
-              <div><h2 id="contact-title">Where should we send your report?</h2><p>Your details are saved on this device as you type.</p></div>
+              <div><h2 id="contact-title">Where should we send your report?</h2></div>
             </div>
 
             <label className="checkout-field">
@@ -161,11 +142,7 @@ export function CheckoutPage() {
             </label>
           </section>
 
-          <section className="checkout-block" aria-labelledby="support-title">
-            <div className="checkout-block-heading">
-              <span>2</span>
-              <div><h2 id="support-title">Add personal help only if you need it</h2><p>Every upgrade is optional and nothing is selected for you.</p></div>
-            </div>
+          <section className="checkout-block" aria-label="Optional 20-minute style review call">
 
             <div className="checkout-bumps">
               {BUMPS.map(({ id, title, price, Icon, summary, details: benefits }) => {
@@ -192,7 +169,7 @@ export function CheckoutPage() {
 
           <section className="checkout-block" aria-labelledby="order-title">
             <div className="checkout-block-heading">
-              <span>3</span>
+              <span>2</span>
               <div><h2 id="order-title">Review your order</h2><p>See exactly what you are paying before continuing.</p></div>
             </div>
 
@@ -217,24 +194,16 @@ export function CheckoutPage() {
 
           <section className="checkout-block checkout-payment" aria-labelledby="payment-title">
             <div className="checkout-block-heading">
-              <span>4</span>
+              <span>3</span>
               <div><h2 id="payment-title">Pay securely</h2><p>Your payment details are handled by the payment gateway.</p></div>
             </div>
-
-            <label className="payment-provider">
-              <input type="radio" name="provider" defaultChecked />
-              <CreditCard size={24} />
-              <span><strong>Cashfree Payments</strong><small>UPI, cards, netbanking and wallets</small></span>
-              <ShieldCheck size={27} weight="fill" />
-            </label>
-
             <label className="checkout-consent">
               <input type="checkbox" checked={consent} onChange={(event) => { setConsent(event.target.checked); setErrors((current) => ({ ...current, consent: "" })); }} />
               <span>I agree to the Privacy Policy, Terms of Service and Refund Policy.</span>
             </label>
             {errors.consent ? <small className="checkout-error">{errors.consent}</small> : null}
 
-            <button className="checkout-pay" type="submit"><LockKey size={20} weight="fill" /> Proceed to secure payment • {formatMoney(total)}</button>
+            <button className="checkout-pay" type="submit"><LockKey size={20} weight="fill" /> Proceed to secure payment &bull; {formatMoney(total)}</button>
             <button className="checkout-save" type="button" onClick={saveForLater}>Need time? Save and finish later</button>
             {status ? <p className="checkout-status" role="status">{status}</p> : null}
 
@@ -256,7 +225,7 @@ export function CheckoutPage() {
           <div>
             <p>Everything you need to stop guessing</p>
             <h2>The AttractiveMen Personalized Style Report</h2>
-            <strong>₹1,999 + GST</strong>
+            <strong>{"\u20B9"}1,999 + GST</strong>
             <ul>
               <li><Check size={17} weight="bold" /> Face, Body & Skin Tone Analysis</li>
               <li><Check size={17} weight="bold" /> 20 Head-to-Toe Outfits</li>
@@ -275,7 +244,7 @@ export function CheckoutPage() {
         <a className="checkout-brand" href="?">AttractiveMen</a>
         <p>Personal style guidance made for Indian men. Individual results vary.</p>
         <nav><a href="#privacy">Privacy Policy</a><a href="#terms">Terms of Service</a><a href="#refund">Refund Policy</a><a href="#support">Contact</a></nav>
-        <small>© 2026 AttractiveMen. All rights reserved.</small>
+        <small>&copy; 2026 AttractiveMen. All rights reserved.</small>
       </footer>
     </div>
   );

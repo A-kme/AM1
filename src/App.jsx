@@ -1,8 +1,10 @@
-import { useState } from "react";
+﻿import { useEffect, useState } from "react";
 import {
   ArrowDown,
   ArrowRight,
   CaretDown,
+  CaretLeft,
+  CaretRight,
   Check,
   ShieldCheck,
   Star,
@@ -18,6 +20,12 @@ import {
 } from "./data.js";
 
 const CHECKOUT_TARGET = "?page=checkout";
+const transformationSlides = [
+  "https://res.cloudinary.com/dhjsqmejb/image/upload/v1784628150/ankur_hhdjc8.png",
+  "https://res.cloudinary.com/dhjsqmejb/image/upload/v1784628150/rahul_j5oyv6.png",
+  "https://res.cloudinary.com/dhjsqmejb/image/upload/v1784628151/satyam_ttlk1w.png",
+  "https://res.cloudinary.com/dhjsqmejb/image/upload/v1784628303/ChatGPT_Image_Jul_21_2026_03_34_51_PM_qi3dmf.png",
+];
 
 function Brand() {
   return (
@@ -33,24 +41,6 @@ function Button({ children = "Get Your Personalized Report Now", light = false, 
       <span>{children}</span>
       <ArrowRight size={20} weight="regular" aria-hidden="true" />
     </a>
-  );
-}
-
-function Header() {
-  return (
-    <header className="site-header">
-      <div className="shell header-inner">
-        <Brand />
-        <nav aria-label="Primary navigation">
-          <a href="#inside">What’s inside</a>
-          <a href="#process">How it works</a>
-          <a href="#faq">FAQ</a>
-        </nav>
-        <a className="header-cta" href={CHECKOUT_TARGET}>
-          Start my report
-        </a>
-      </div>
-    </header>
   );
 }
 
@@ -85,9 +75,8 @@ function Hero() {
         <div className="hero-copy">
           <Brand />
           <h1>
-            <span className="hero-title-line hero-title-primary">Look Your Best</span>
-            <span className="hero-title-line hero-title-combined"><b>Version</b> <i>Without</i></span>
-            <span className="hero-title-line hero-title-accent">Expensive Brands</span>
+            <span className="hero-title-line hero-title-primary">Look Your Best Version</span>
+            <span className="hero-title-line hero-title-accent">Without Expensive Brands...</span>
           </h1>
           <div className="hero-subheading-card">
             <h2>Random fashion Reel and YouTube videos make you look average</h2>
@@ -123,39 +112,92 @@ function Hero() {
   );
 }
 
+function TransformationShowcase() {
+  const [activeSlide, setActiveSlide] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
+
+  useEffect(() => {
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reduceMotion || isPaused) return undefined;
+
+    const timer = window.setInterval(() => {
+      setActiveSlide((current) => (current + 1) % transformationSlides.length);
+    }, 4000);
+
+    return () => window.clearInterval(timer);
+  }, [isPaused]);
+
+  const moveSlide = (direction) => {
+    setActiveSlide((current) => (current + direction + transformationSlides.length) % transformationSlides.length);
+  };
+
+  return (
+    <section
+      className="transformation-showcase"
+      aria-label="Style transformations"
+      onMouseEnter={() => setIsPaused(true)}
+      onMouseLeave={() => setIsPaused(false)}
+      onFocusCapture={() => setIsPaused(true)}
+      onBlurCapture={() => setIsPaused(false)}
+    >
+      <div className="transformation-carousel">
+        <div className="transformation-viewport">
+          <div className="transformation-track" style={{ transform: `translateX(-${activeSlide * 100}%)` }}>
+            {transformationSlides.map((src, index) => (
+              <figure className="transformation-slide" key={`${src}-${index}`} aria-hidden={activeSlide !== index}>
+                <img src={src} alt={`Before and after personal style transformation ${index + 1}`} loading={index === 0 ? "eager" : "lazy"} />
+                <div className="transformation-divider" aria-hidden="true" />
+                <span className="transformation-label transformation-label-before">Before</span>
+                <span className="transformation-label transformation-label-after">After</span>
+              </figure>
+            ))}
+          </div>
+        </div>
+        <button className="transformation-arrow transformation-arrow-previous" type="button" onClick={() => moveSlide(-1)} aria-label="Show previous transformation">
+          <CaretLeft size={20} weight="bold" />
+        </button>
+        <button className="transformation-arrow transformation-arrow-next" type="button" onClick={() => moveSlide(1)} aria-label="Show next transformation">
+          <CaretRight size={20} weight="bold" />
+        </button>
+        <div className="transformation-dots" aria-label="Choose a transformation">
+          {transformationSlides.map((_, index) => (
+            <button
+              className={activeSlide === index ? "active" : ""}
+              type="button"
+              key={index}
+              onClick={() => setActiveSlide(index)}
+              aria-label={`Show transformation ${index + 1}`}
+              aria-current={activeSlide === index ? "true" : undefined}
+            />
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
 function ProblemSection() {
   return (
     <section className="section section-cool problem" id="problem">
       <div className="shell narrow-shell">
         <SectionHeading index="02" eyebrow="The problem">
-          Here’s why Reel and YouTube styling advice makes you <span>look average</span>
+          Here's why Reel and YouTube styling advice makes you <span>look average</span>
         </SectionHeading>
         <p className="problem-opening">
-          You open any style Reel and the advice says “wear this jacket”, “get this haircut”, “try this colour”. So you try it. And it looks… fine. But, <strong>honestly</strong>, not the version of yourself you were hoping to see in the mirror.
+          You open any style Reel and the advice saying &ldquo;wear this jacket&rdquo;, &ldquo;get this haircut&rdquo;, &ldquo;try this color&rdquo;. So you try it. And it looks... fine. But, <strong>HONESTLY</strong> not the version of yourself you were hoping to see in the mirror.
         </p>
         <figure className="problem-visual">
           <img src="/assets/problem/reel-vs-real.webp" alt="The same outfit looking suitable in a Reel but poorly fitted in real life" />
         </figure>
-        <div className="problem-rhythm" aria-label="The common styling cycle">
-          <p>You see a haircut, shirt, or colour online.</p>
-          <span aria-hidden="true" />
-          <p>You try it.</p>
-          <span aria-hidden="true" />
-          <p>But it still does not look right on you.</p>
-        </div>
-        <p className="problem-explanation">
-          That is because most style advice is <strong>made for everyone</strong>, not for <em>your face, body, or skin tone</em>.
-        </p>
-        <div className="problem-consequences">
-          <p>A popular haircut may <strong>hide your jawline.</strong></p>
-          <p>A trending colour may <strong>make your skin look dull.</strong></p>
-          <p>A “must-have” outfit may make you look <strong>shorter or heavier.</strong></p>
-        </div>
-        <p className="problem-spend">So you keep spending money, but still feel unsure in front of the mirror.</p>
-        <div className="problem-close">
-          <h3>You do not need more trends.<br /><span>You need advice made for you.</span></h3>
-          <p>Until now, this kind of personal advice usually came from an expensive stylist.</p>
-          <p className="strike-price">And one session could cost <s>₹10,000 or more.</s></p>
+        <div className="problem-copy">
+          <p className="problem-kicker">That&apos;s because the advice was never about you:</p>
+          <ul className="problem-bullets">
+            <li><span><strong>A hairstyle &ldquo;trending in Bollywood right now&rdquo;</strong> is built for a completely different face shape than yours and instead of sharpening your jawline, it hides it.</span></li>
+            <li><span><strong>A &ldquo;widely popular&rdquo; color</strong> can fade out your exact skin undertone while looking amazing on someone three shades warmer or cooler than you.</span></li>
+            <li><span><strong>An outfit &ldquo;every man should own&rdquo;</strong> can add bulk in exactly the wrong place for your body type, or make you look completely bad.</span></li>
+          </ul>
+          <p>That's why you end up spending money to look <em>more</em> generic, because the internet gives the same five tips to crores of different faces, bodies, and skin tones.</p>
+          <p>Meanwhile, Indian men are stepping onto a global stage for jobs, for opportunities, for first impressions that happen in under seven seconds while still being told to copy a celebrity&apos;s look off Instagram and hope for the best.</p>
+          <p>The only people who actually get <em>personalized</em> styling advice are the ones who can afford a stylist. And that costs {"\u20B9"}10,000-{"\u20B9"}15,000 a session.</p>
           <strong className="until-now">Until now.</strong>
         </div>
       </div>
@@ -170,28 +212,24 @@ function ApproachSection() {
         <SectionHeading index="03" eyebrow="Our approach">
           We reverse-engineered what <span>celebrity stylists actually do</span> and made it affordable
         </SectionHeading>
-        <div className="approach-rule" aria-hidden="true" />
-        <p className="approach-lead">A good stylist does not start with trends.</p>
-        <div className="approach-flow">
-          <div>
-            <p>They first understand your <em>face shape</em>, <em>skin undertone</em>, and <em>body type</em>.</p>
+        <div className="approach-content">
+          <p>We spent months studying how professional personal stylists build a look for a client: they measure the face shape. They read the skin&apos;s undertone. They analyse body proportions. Then they build every recommendation, including hair, color, fit, and grooming, around those three fixed facts about a person&apos;s body.</p>
+          <p className="approach-method">We took that exact process and turned it into a structured system: <strong>the Style Analysis Method</strong>. The same depth of personalization, without the {"\u20B9"}15,000 expense and the multi-week wait for an appointment.</p>
+          <h3>From your photos and a few basic measurements, our stylist analyses:</h3>
+          <ul className="approach-analysis-list">
+            <li><Check size={19} weight="bold" /><span><strong>Your face shape</strong> down to the exact measurements</span></li>
+            <li><Check size={19} weight="bold" /><span><strong>Your skin undertone</strong> so every color we recommend actually flatters you, not fights you</span></li>
+            <li><Check size={19} weight="bold" /><span><strong>Your body type</strong> so every outfit is chosen to make you look taller, leaner, and sharper</span></li>
+          </ul>
+          <div className="approach-conclusion">
+            <p>Then we build your full report around those three things.</p>
+            <div className="approach-contrast">
+              <span>Not what&apos;s trending.</span>
+              <span>Not what worked for a Bollywood actor with completely different proportions.</span>
+              <strong>What works for your face, on your body, in your skin.</strong>
+            </div>
           </div>
-          <ArrowDown size={34} weight="thin" aria-hidden="true" />
-          <div>
-            <p>They choose the right <em>haircut</em>, <em>colours</em>, <em>fits</em>, and <em>grooming</em> for you.</p>
-          </div>
         </div>
-        <div className="approach-statement">
-          <p>We use the same approach.</p>
-          <p>Your full report is built around</p>
-          <strong>what suits you.</strong>
-        </div>
-        <div className="approach-no-list" aria-label="What the report is not based on">
-          <s>Not what is trending.</s>
-          <s>Not what worked for a Bollywood actor.</s>
-          <s>Not what looks good on a celebrity.</s>
-        </div>
-        <h3 className="approach-final">What looks good on <span>you.</span></h3>
       </div>
     </section>
   );
@@ -230,7 +268,7 @@ function ReportContents() {
     <section className="section report-contents" id="inside">
       <div className="shell">
         <SectionHeading index="05" eyebrow="Inside your report" intro="Everything is built around the same three inputs: your face, body, and skin tone.">
-          What’s Inside Your <span>Personalized Style Report</span>
+          What's Inside Your <span>Personalized Style Report</span>
         </SectionHeading>
         <div className="report-grid">
           {reportItems.map((item) => (
@@ -290,7 +328,7 @@ function SocialProof() {
               <div className="testimonial-rating" aria-label="Five stars">
                 {Array.from({ length: 5 }).map((_, star) => <Star key={star} size={15} weight="fill" />)}
               </div>
-              <blockquote>“{item.quote}”</blockquote>
+              <blockquote>&ldquo;{item.quote}&rdquo;</blockquote>
               <footer>
                 <img className="testimonial-avatar" src={item.image} alt={`${item.name}, verified customer`} loading="lazy" />
                 <div><strong>{item.name}</strong><small>{item.meta}</small></div>
@@ -363,7 +401,7 @@ function FAQ() {
         <div>
           <h2>Stop guessing before your next haircut or purchase.</h2>
           <p>Get a complete head-to-toe plan built for your face, body, skin tone, routine and budget.</p>
-          <div className="price-line"><strong>₹1,999</strong><span>One-time payment</span></div>
+          <div className="price-line"><strong>{"\u20B9"}1,999</strong><span>One-time payment</span></div>
           <Button light>Get Your Personalized Report Now</Button>
           <p className="delivery-proof"><ShieldCheck size={20} weight="regular" /> Delivered within 48 hours after your assessment.</p>
         </div>
@@ -377,7 +415,7 @@ function Footer() {
     <footer className="site-footer" id="footer">
       <div className="shell footer-inner">
         <div><Brand /><p>Personal style advice made for Indian men.</p></div>
-        <div className="footer-links"><a href="#inside">What’s inside</a><a href="#process">How it works</a><a href="#faq">FAQ</a></div>
+        <div className="footer-links"><a href="#inside">What's inside</a><a href="#process">How it works</a><a href="#faq">FAQ</a></div>
         <div className="footer-meta"><span>Privacy</span><span>Terms</span><span>Support</span></div>
       </div>
       <div className="footer-wordmark" aria-label="AttractiveMen">AttractiveMen</div>
@@ -385,16 +423,12 @@ function Footer() {
   );
 }
 
-function MobileStickyCTA() {
-  return <a className="mobile-sticky-cta" href={CHECKOUT_TARGET}>Get my report · ₹1,999 <ArrowRight size={18} /></a>;
-}
-
 export function App() {
   return (
     <>
-      <Header />
       <main>
         <Hero />
+        <TransformationShowcase />
         <ProblemSection />
         <ApproachSection />
         <ComparisonSection />
@@ -405,7 +439,6 @@ export function App() {
         <FAQ />
       </main>
       <Footer />
-      <MobileStickyCTA />
     </>
   );
 }
