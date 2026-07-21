@@ -85,17 +85,25 @@ function Hero() {
         <div className="hero-copy">
           <Brand />
           <h1>
-            <strong className="hero-title-primary">Look Your Best<br />Version...</strong> <span><span className="hero-nowrap">Without Expensive</span><br />Brand...</span>
+            <span className="hero-title-line hero-title-primary">Look Your Best</span>
+            <span className="hero-title-line hero-title-combined"><b>Version</b> <i>Without</i></span>
+            <span className="hero-title-line hero-title-accent">Expensive Brands</span>
           </h1>
           <div className="hero-subheading-card">
             <h2>Random fashion Reel and YouTube videos make you look average</h2>
           </div>
-          <p>
-            The advice is not built for your <strong>face shape</strong>, <strong>body type</strong>, and <strong>skin tone</strong>.
+          <p className="hero-reason">
+            Because the advice is not built for a <strong>face shape</strong>, <strong>body type</strong>, and <strong>skin tone</strong>.
           </p>
-          <p>
-            Time to get your <em>personalized style</em> that covers <em>head-to-toe transformation</em> including <em>best hair style</em> for your <strong>face shape</strong>, <em>best colors and fit</em> for your <strong>body type</strong> and <strong>skin tone</strong>, and <em>best shoes and accessories</em> that compliments your look without spending money on expensive clothes and accessories.
+          <p className="hero-style-lead">
+            Time to get your <em>personalized style</em> that covers <em>head-to-toe transformation</em>, including:
           </p>
+          <ul className="hero-benefits">
+            <li><Check size={18} weight="bold" /><span>Best hair style for your <strong>face shape</strong></span></li>
+            <li><Check size={18} weight="bold" /><span>Best colors and fit for your <strong>body type</strong> and <strong>skin tone</strong></span></li>
+            <li><Check size={18} weight="bold" /><span>Best shoes and accessories that compliments your look</span></li>
+          </ul>
+          <p className="hero-budget-note">Without spending money on expensive clothes and accessories.</p>
         </div>
         <div className="hero-visual">
           <BeforeAfterSlider />
