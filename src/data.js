@@ -1,4 +1,4 @@
-export const comparisonRows = [
+﻿export const comparisonRows = [
   {
     title: "Style analysis",
     report: "Exact face shape analysis with real measurements.",
@@ -7,7 +7,7 @@ export const comparisonRows = [
   {
     title: "Color selection",
     report: "Skin-tone-matched palette built for your undertone.",
-    generic: "Random ‘trending’ colors.",
+    generic: "Random 'trending' colors.",
   },
   {
     title: "Body type guide",
@@ -22,13 +22,13 @@ export const comparisonRows = [
   {
     title: "Full look",
     report: "Complete head-to-toe looks built for your features.",
-    generic: "Copy what’s trending in Bollywood or Hollywood.",
+    generic: "Copy what's trending in Bollywood or Hollywood.",
   },
   {
     title: "Cost",
-    report: "₹1,999",
-    generic: "‘Free’ advice that wastes money on wrong purchases.",
-    note: "A personal stylist can cost ₹10,000–₹15,000 per session.",
+    report: "\u20B91,999",
+    generic: "'Free' advice that wastes money on wrong purchases.",
+    note: "A personal stylist can cost \u20B910,000-\u20B915,000 per session.",
   },
 ];
 
@@ -103,7 +103,7 @@ export const processSteps = [
     number: "Step 1",
     title: "Your Style Assessment",
     description:
-      "After payment, you send us a few photos and basic measurements of your face and body. That’s all our creative stylist needs to start.",
+      "After payment, you send us a few photos and basic measurements of your face and body. That's all our creative stylist needs to start.",
     image: "/assets/process/assessment.webp",
     alt: "Front, side and full-body photo examples for a style assessment",
   },
@@ -111,7 +111,7 @@ export const processSteps = [
     number: "Step 2",
     title: "We Run the Style Analysis Method",
     description:
-      "Your face shape, body type, and skin tone are analysed against our structured styling framework,the same depth of analysis a ₹10,000–₹15,000 personal stylist session would give you.",
+      "Your face shape, body type, and skin tone are analysed against our structured styling framework, the same depth of analysis a \u20B910,000-\u20B915,000 personal stylist session would give you.",
     image: "/assets/process/analysis.webp",
     alt: "Minimal face, body and colour analysis preview",
   },
@@ -129,25 +129,25 @@ export const testimonials = [
   {
     quote: "It's like a stylist studied me. The recommendations were spot on for my face shape.",
     name: "Rishi",
-    meta: "Verified customer · Pune",
+    meta: "Verified customer \u00B7 Pune",
     image: "/assets/testimonials/customer-1.webp",
   },
   {
     quote: "Did the face shape test. Got 3 compliments the next day. Best investment I've made in myself.",
     name: "Vikram",
-    meta: "Verified customer · Chennai",
+    meta: "Verified customer \u00B7 Chennai",
     image: "/assets/testimonials/customer-2.webp",
   },
   {
     quote: "I never knew how much difference the right style could make. After getting my report, I finally understand why certain clothes look better on me than others. The face shape analysis was spot on.",
     name: "Jasprit",
-    meta: "Verified customer · Chandigarh",
+    meta: "Verified customer \u00B7 Chandigarh",
     image: "/assets/testimonials/customer-3.webp",
   },
   {
     quote: "The report made everything simple. I know which colours suit me, what fits to look for, and how to put together outfits without buying expensive brands.",
     name: "Arjun",
-    meta: "Verified customer · Bengaluru",
+    meta: "Verified customer \u00B7 Bengaluru",
     image: "/assets/testimonials/customer-4.webp",
   },
 ];

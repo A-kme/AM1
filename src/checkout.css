@@ -1,4 +1,4 @@
-.checkout-page {
+﻿.checkout-page {
   min-height: 100vh;
   color: #1f292b;
   background: #f6f7f4;
@@ -24,14 +24,14 @@
 .checkout-back { text-decoration: none; justify-self: start; }
 .checkout-secure { justify-self: end; }
 
-.checkout-main { width: min(100% - 32px, 680px); margin: 0 auto; padding: 54px 0 70px; }
-.checkout-intro { margin-bottom: 30px; padding: 38px 30px; border: 1px solid #e4ded1; border-radius: 16px; background: #f3efe6; text-align: center; }
+.checkout-main { width: min(100% - 32px, 680px); margin: 0 auto; padding: 24px 0 70px; }
+.checkout-intro { margin-bottom: 14px; padding: 30px 30px 24px; border: 1px solid #e4ded1; border-radius: 16px; background: #f3efe6; text-align: center; }
 .checkout-step { margin: 0 0 18px; color: #60777c; text-transform: uppercase; letter-spacing: .13em; font-size: 11px; font-weight: 700; }
 .checkout-intro h1 { margin: 0; font-size: clamp(35px, 6vw, 54px); line-height: .99; letter-spacing: -.055em; font-weight: 600; }
 .checkout-intro h1 span { color: #839fa4; font-weight: 400; }
 .checkout-intro > p:not(.checkout-step) { max-width: 530px; margin: 20px auto 0; color: #526064; font-size: 16px; line-height: 1.65; }
 
-.checkout-trust-row { display: flex; justify-content: center; flex-wrap: wrap; gap: 9px 18px; margin-top: 22px; color: #405357; font-size: 12px; font-weight: 600; }
+.checkout-trust-row { display: flex; justify-content: center; flex-wrap: nowrap; gap: 12px; margin-top: 16px; color: #405357; font-size: 11px; font-weight: 600; white-space: nowrap; }
 .checkout-trust-row span { display: inline-flex; align-items: center; gap: 6px; }
 .checkout-trust-row svg { color: #487b80; }
 
@@ -87,13 +87,6 @@
 .checkout-total { align-items: center; margin-top: 7px; padding-top: 15px !important; border-top: 1px solid #ccd9d6; color: #1f292b !important; font-size: 16px !important; }
 .checkout-total strong { font-size: 25px; letter-spacing: -.03em; }
 
-.checkout-provider { display: flex; align-items: center; gap: 12px; padding: 15px; border: 1px solid #8dacab; border-radius: 9px; background: white; }
-.checkout-provider > svg { color: #527c81; }
-.checkout-provider span { flex: 1; }
-.checkout-provider strong, .checkout-provider small { display: block; }
-.checkout-provider strong { font-size: 14px; }
-.checkout-provider small { margin-top: 3px; color: #718084; font-size: 11px; }
-.provider-choice { width: 18px; height: 18px; border: 5px solid #527c81; border-radius: 50%; }
 .checkout-consent { display: grid; grid-template-columns: auto 1fr; gap: 10px; margin: 17px 2px; color: #536164; font-size: 12px; line-height: 1.5; }
 .checkout-consent input { margin-top: 2px; accent-color: #527c81; }
 .checkout-pay { width: 100%; min-height: 56px; border: 0; border-radius: 9px; display: flex; justify-content: center; align-items: center; gap: 9px; background: #202b2d; color: #fff; font-size: 15px; font-weight: 700; cursor: pointer; box-shadow: 0 8px 20px rgba(31,43,45,.18); }
@@ -131,15 +124,13 @@
 .checkout-footer small { display: block; margin-top: 26px; color: rgba(255,255,255,.42); font-size: 10px; }
 
 @media (max-width: 620px) {
-  .checkout-header { min-height: 62px; padding: 0 16px; grid-template-columns: auto 1fr auto; }
-  .checkout-brand { justify-self: center; font-size: 20px; }
-  .checkout-back span, .checkout-secure { font-size: 0; }
-  .checkout-secure svg { width: 18px; height: 18px; }
-  .checkout-main { width: min(100% - 20px, 680px); padding: 38px 0 48px; }
-  .checkout-intro { margin-bottom: 24px; padding: 30px 18px; }
-  .checkout-intro h1 { font-size: clamp(34px, 10.5vw, 44px); }
+  .checkout-main { width: min(100% - 20px, 680px); padding: 12px 0 48px; }
+  .checkout-intro { margin-bottom: 12px; padding: 24px 12px 18px; }
+  .checkout-intro h1 { font-size: clamp(28px, 7.7vw, 34px); line-height: 1.03; }
   .checkout-intro > p:not(.checkout-step) { margin-top: 16px; font-size: 14px; }
-  .checkout-trust-row { display: grid; justify-items: start; width: max-content; max-width: 100%; margin: 20px auto 0; }
+  .checkout-trust-row { width: 100%; justify-content: space-between; gap: 4px; margin: 14px auto 0; font-size: 10px; }
+  .checkout-trust-row span { gap: 3px; }
+  .checkout-trust-row svg { width: 13px; height: 13px; }
   .checkout-block { padding: 26px 20px; }
   .checkout-block-heading h2 { font-size: 17px; }
   .checkout-bump { padding: 15px 13px; gap: 10px; }
