@@ -14,7 +14,8 @@ const query = new URLSearchParams(window.location.search);
 const pathname = window.location.pathname.replace(/\/+$/, "");
 const isCheckout =
   query.get("page") === "checkout" ||
-  pathname.endsWith("/checkout");
+  pathname.endsWith("/checkout") ||
+  pathname.endsWith("/checkout.html");
 const legalType =
   query.get("page") === "privacy" || pathname.endsWith("/privacy")
     ? "privacy"
