@@ -1,4 +1,4 @@
-﻿import { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   ArrowDown,
   ArrowRight,
@@ -20,13 +20,32 @@ import {
 } from "./data.js";
 
 const CHECKOUT_TARGET = "?page=checkout";
+const IST_OFFSET_MS = 5.5 * 60 * 60 * 1000;
 const transformationSlides = [
   "https://res.cloudinary.com/dhjsqmejb/image/upload/v1784628150/ankur_hhdjc8.png",
   "https://res.cloudinary.com/dhjsqmejb/image/upload/v1784628150/rahul_j5oyv6.png",
   "https://res.cloudinary.com/dhjsqmejb/image/upload/v1784628151/satyam_ttlk1w.png",
   "https://res.cloudinary.com/dhjsqmejb/image/upload/v1784628303/ChatGPT_Image_Jul_21_2026_03_34_51_PM_qi3dmf.png",
 ];
+function getTimeUntilIstMidnight() {
+  const now = Date.now();
+  const istNow = new Date(now + IST_OFFSET_MS);
+  const nextMidnight = Date.UTC(
+    istNow.getUTCFullYear(),
+    istNow.getUTCMonth(),
+    istNow.getUTCDate() + 1,
+  );
+  const remaining = Math.max(0, nextMidnight - (now + IST_OFFSET_MS));
+  const totalSeconds = Math.floor(remaining / 1000);
 
+  return {
+    hours: Math.floor(totalSeconds / 3600),
+    minutes: Math.floor((totalSeconds % 3600) / 60),
+    seconds: totalSeconds % 60,
+  };
+}
+
+const padTimerPart = (value) => String(value).padStart(2, "0");
 function Brand() {
   return (
     <a className="brand" href="#top" aria-label="AttractiveMen home">
@@ -44,6 +63,58 @@ function Button({ children = "Get Your Personalized Report Now", light = false, 
   );
 }
 
+function StickyBuyBar() {
+  const [remaining, setRemaining] = useState(getTimeUntilIstMidnight);
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    const timer = window.setInterval(() => setRemaining(getTimeUntilIstMidnight()), 1000);
+    return () => window.clearInterval(timer);
+  }, []);
+
+  useEffect(() => {
+    const hero = document.querySelector(".hero");
+    const purchase = document.getElementById("purchase");
+
+    const updateVisibility = () => {
+      const pastHero = hero ? hero.getBoundingClientRect().bottom <= 0 : false;
+      const finalOfferVisible = purchase ? purchase.getBoundingClientRect().top <= window.innerHeight : false;
+      setVisible(pastHero && !finalOfferVisible);
+    };
+
+    updateVisibility();
+    window.addEventListener("scroll", updateVisibility, { passive: true });
+    window.addEventListener("resize", updateVisibility);
+
+    return () => {
+      window.removeEventListener("scroll", updateVisibility);
+      window.removeEventListener("resize", updateVisibility);
+    };
+  }, []);
+
+  useEffect(() => {
+    document.body.classList.toggle("has-sticky-buy", visible);
+    return () => document.body.classList.remove("has-sticky-buy");
+  }, [visible]);
+
+  const timerText = `${padTimerPart(remaining.hours)}:${padTimerPart(remaining.minutes)}:${padTimerPart(remaining.seconds)}`;
+
+  return (
+    <aside className={`sticky-buy-bar ${visible ? "visible" : ""}`} aria-hidden={!visible}>
+      <div className="sticky-buy-inner">
+        <div className="sticky-buy-offer">
+          <strong>{"\u20B9"}1,999 <small>+ GST</small></strong>
+          <span>One-time payment</span>
+        </div>
+        <div className="sticky-buy-countdown">
+          <span>Today ends in</span>
+          <time aria-label={`${remaining.hours} hours, ${remaining.minutes} minutes and ${remaining.seconds} seconds remaining`}>{timerText}</time>
+        </div>
+        <a className="sticky-buy-button" href={CHECKOUT_TARGET}>Buy Now <ArrowRight size={18} aria-hidden="true" /></a>
+      </div>
+    </aside>
+  );
+}
 function SectionHeading({ index, eyebrow, children, intro, align = "center", id }) {
   return (
     <div className={`section-heading section-heading-${align}`} id={id}>
@@ -414,9 +485,11 @@ function Footer() {
   return (
     <footer className="site-footer" id="footer">
       <div className="shell footer-inner">
-        <div><Brand /><p>Personal style advice made for Indian men.</p></div>
-        <div className="footer-links"><a href="#inside">What's inside</a><a href="#process">How it works</a><a href="#faq">FAQ</a></div>
-        <div className="footer-meta"><span>Privacy</span><span>Terms</span><span>Support</span></div>
+        <Brand />
+        <nav className="footer-legal-links" aria-label="Legal links">
+          <a href="/privacy">Privacy Policy</a>
+          <a href="/terms">Terms &amp; Conditions</a>
+        </nav>
       </div>
       <div className="footer-wordmark" aria-label="AttractiveMen">AttractiveMen</div>
     </footer>
@@ -439,6 +512,12 @@ export function App() {
         <FAQ />
       </main>
       <Footer />
+      <StickyBuyBar />
     </>
   );
 }
+
+
+
+
+
