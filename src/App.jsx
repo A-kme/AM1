@@ -18,8 +18,9 @@ import {
   reportItems,
   testimonials,
 } from "./data.js";
+import { CHECKOUT_PATH } from "./routes.js";
 
-const CHECKOUT_TARGET = "?page=checkout";
+const CHECKOUT_TARGET = CHECKOUT_PATH;
 const IST_OFFSET_MS = 5.5 * 60 * 60 * 1000;
 const transformationSlides = [
   "https://res.cloudinary.com/dhjsqmejb/image/upload/v1784628150/ankur_hhdjc8.png",

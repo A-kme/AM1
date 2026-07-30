@@ -33,9 +33,14 @@ $stylePath = Join-Path $distRoot $styleMatch.Groups['path'].Value.TrimStart('.',
 $script = [IO.File]::ReadAllText($scriptPath)
 $style = [IO.File]::ReadAllText($stylePath)
 
-$style = [regex]::Replace($style, 'url\((?<quote>["'']?)(?<path>\.\/[^)"'']+)(?:\k<quote>)\)', {
+$style = [regex]::Replace($style, 'url\((?<quote>["'']?)(?<path>(?:\.\/|\/)assets\/[^)"'']+)(?:\k<quote>)\)', {
   param($match)
-  $assetPath = Join-Path (Split-Path -Parent $stylePath) $match.Groups['path'].Value.Substring(2)
+  $assetRef = $match.Groups['path'].Value
+  if ($assetRef.StartsWith('./')) {
+    $assetPath = Join-Path (Split-Path -Parent $stylePath) $assetRef.Substring(2)
+  } else {
+    $assetPath = Join-Path $distRoot $assetRef.TrimStart('/')
+  }
   if (Test-Path -LiteralPath $assetPath) { 'url("' + (Get-DataUri $assetPath) + '")' } else { $match.Value }
 })
 
@@ -48,6 +53,7 @@ $script = [regex]::Replace($script, '/assets/(?<path>[A-Za-z0-9_./-]+)', {
 $html = $html.Replace($scriptMatch.Value, '<script>' + $script + '</script>')
 $html = $html.Replace($styleMatch.Value, '<style>' + $style + '</style>')
 $html = $html.Replace('<script type="module"', '<script')
+$html = $html -replace "`r`n?", "`n"
 
 $primaryOutput = Join-Path $projectRoot 'AttractiveMen.html'
 $legacyOutput = Join-Path $projectRoot 'attractiveme.html'

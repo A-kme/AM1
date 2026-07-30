@@ -4,6 +4,8 @@ dist/
 .git/
 .vercel/
 .npmrc
+.env
+.env.*
 AGENTS.md
 design-qa.md
 AttractiveMen.html

@@ -1,5 +1,10 @@
 {
   "framework": "vite",
   "outputDirectory": "dist",
-  "cleanUrls": true
+  "cleanUrls": true,
+  "rewrites": [
+    { "source": "/a-m", "destination": "/" },
+    { "source": "/a-m-checkout", "destination": "/" },
+    { "source": "/a-m-thankyou", "destination": "/" }
+  ]
 }

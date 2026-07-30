@@ -52,10 +52,47 @@ export function CheckoutPage() {
   const [coupon, setCoupon] = useState("");
   const [couponMessage, setCouponMessage] = useState("");
   const [status, setStatus] = useState("");
+  const [isPaying, setIsPaying] = useState(false);
+  const [paymentResult, setPaymentResult] = useState(null);
 
   useEffect(() => {
     localStorage.setItem(DRAFT_KEY, JSON.stringify({ details, selected }));
   }, [details, selected]);
+
+  useEffect(() => {
+    const merchantOrderId = new URLSearchParams(window.location.search).get("merchantOrderId");
+    if (!merchantOrderId) return undefined;
+
+    let cancelled = false;
+    setStatus("Checking your payment status...");
+
+    fetch(`/api/phonepe/status?merchantOrderId=${encodeURIComponent(merchantOrderId)}`)
+      .then(async (response) => {
+        const data = await response.json().catch(() => ({}));
+        if (!response.ok) throw new Error(data.message || "Payment status could not be checked.");
+        return data;
+      })
+      .then((data) => {
+        if (cancelled) return;
+        setPaymentResult(data);
+
+        if (data.state === "COMPLETED") {
+          localStorage.removeItem(DRAFT_KEY);
+          setStatus("Payment received. Your report order is confirmed.");
+        } else if (data.state === "FAILED") {
+          setStatus("Payment was not completed. You can retry below.");
+        } else {
+          setStatus("Payment is pending. If money was deducted, wait a moment and refresh this page.");
+        }
+      })
+      .catch((error) => {
+        if (!cancelled) setStatus(error.message);
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   const selectedBumps = BUMPS.filter((bump) => selected.includes(bump.id));
   const bumpsTotal = selectedBumps.reduce((sum, bump) => sum + bump.price, 0);
@@ -66,6 +103,7 @@ export function CheckoutPage() {
   const updateDetail = (field, value) => {
     setDetails((current) => ({ ...current, [field]: value }));
     if (errors[field]) setErrors((current) => ({ ...current, [field]: "" }));
+    setPaymentResult(null);
     setStatus("");
   };
 
@@ -73,6 +111,7 @@ export function CheckoutPage() {
     setSelected((current) =>
       current.includes(id) ? current.filter((item) => item !== id) : [...current, id],
     );
+    setPaymentResult(null);
     setStatus("");
   };
 
@@ -86,13 +125,35 @@ export function CheckoutPage() {
     return Object.keys(next).length === 0;
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     if (!validate()) {
       setStatus("Please check the highlighted fields. Nothing has been charged.");
       return;
     }
-    setStatus("Your details are ready. Connect the live payment gateway to open secure payment here.");
+
+    setIsPaying(true);
+    setStatus("Opening secure payment...");
+
+    try {
+      const response = await fetch("/api/phonepe/create-order", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ details, selected }),
+      });
+      const data = await response.json().catch(() => ({}));
+
+      if (!response.ok) {
+        if (data.errors) setErrors(data.errors);
+        throw new Error(data.message || "Payment could not be started.");
+      }
+      if (!data.redirectUrl) throw new Error("Payment gateway did not return a checkout URL.");
+
+      window.location.assign(data.redirectUrl);
+    } catch (error) {
+      setIsPaying(false);
+      setStatus(error.message);
+    }
   };
 
   const saveForLater = () => {
@@ -117,6 +178,13 @@ export function CheckoutPage() {
             <span><Check size={16} weight="bold" /> 48-Hour Delivery</span>
           </div>
         </section>
+
+        {paymentResult ? (
+          <section className={`checkout-payment-result ${paymentResult.state?.toLowerCase() || ""}`} aria-live="polite">
+            <strong>{paymentResult.state === "COMPLETED" ? "Payment received" : paymentResult.state === "FAILED" ? "Payment failed" : "Payment pending"}</strong>
+            <span>Order ID: {paymentResult.orderId || paymentResult.merchantOrderId || "Pending"}</span>
+          </section>
+        ) : null}
 
         <form className="checkout-card" onSubmit={handleSubmit} noValidate>
           <section className="checkout-block" aria-labelledby="contact-title">
@@ -203,7 +271,9 @@ export function CheckoutPage() {
             </label>
             {errors.consent ? <small className="checkout-error">{errors.consent}</small> : null}
 
-            <button className="checkout-pay" type="submit"><LockKey size={20} weight="fill" /> Proceed to secure payment &bull; {formatMoney(total)}</button>
+            <button className="checkout-pay" type="submit" disabled={isPaying} aria-busy={isPaying}>
+              <LockKey size={20} weight="fill" /> {isPaying ? "Opening secure payment..." : `Proceed to secure payment \u2022 ${formatMoney(total)}`}
+            </button>
             <button className="checkout-save" type="button" onClick={saveForLater}>Need time? Save and finish later</button>
             {status ? <p className="checkout-status" role="status">{status}</p> : null}
 

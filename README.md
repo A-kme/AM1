@@ -45,10 +45,33 @@ This creates `AttractiveMen.html` in the project root.
 
 ## Payment integration
 
-The current Cashfree section is a frontend prototype. A live Cashfree account, secure backend order creation, payment verification and webhook handling are still required before accepting payments.
+Checkout uses PhonePe PG V2 Standard Checkout through serverless API routes:
+
+- `POST /api/phonepe/create-order` creates a PhonePe order and returns the hosted checkout URL.
+- `GET /api/phonepe/status?merchantOrderId=...` checks the order status after redirect.
+- `POST /api/phonepe/webhook` accepts verified PhonePe webhooks when webhook credentials are configured.
+
+Required environment variables:
+
+```text
+PHONEPE_CLIENT_ID
+PHONEPE_CLIENT_SECRET
+PHONEPE_CLIENT_VERSION
+PHONEPE_ENV
+BASE_URL
+MAKE_WEBHOOK_URL
+```
+
+For webhook verification, also configure `PHONEPE_WEBHOOK_USERNAME` and `PHONEPE_WEBHOOK_PASSWORD` to match the SHA webhook credentials set in the PhonePe dashboard.
 
 The checkout currently calculates GST at 18%. Confirm the applicable tax rate before launch.
 
 ## Live deployment
 
-Production: https://attractive-men.vercel.app
+Production URLs:
+
+```text
+https://thriveonp.com/a-m
+https://thriveonp.com/a-m-checkout
+https://thriveonp.com/a-m-thankyou
+```

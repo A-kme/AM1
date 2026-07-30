@@ -8,23 +8,22 @@ import "@fontsource/inter/600-italic.css";
 import { App } from "./App.jsx";
 import { CheckoutPage } from "./Checkout.jsx";
 import { LegalPage } from "./Legal.jsx";
+import { ThankYouPage } from "./ThankYou.jsx";
+import { getPageRoute } from "./routes.js";
 import "./styles.css";
 
-const query = new URLSearchParams(window.location.search);
-const pathname = window.location.pathname.replace(/\/+$/, "");
-const isCheckout =
-  query.get("page") === "checkout" ||
-  pathname.endsWith("/checkout") ||
-  pathname.endsWith("/checkout.html");
-const legalType =
-  query.get("page") === "privacy" || pathname.endsWith("/privacy")
-    ? "privacy"
-    : query.get("page") === "terms" || pathname.endsWith("/terms")
-      ? "terms"
-      : null;
+const route = getPageRoute(window.location.pathname, window.location.search);
 
 createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    {isCheckout ? <CheckoutPage /> : legalType ? <LegalPage type={legalType} /> : <App />}
+    {route.page === "checkout" ? (
+      <CheckoutPage />
+    ) : route.page === "thankyou" ? (
+      <ThankYouPage merchantOrderId={route.merchantOrderId} />
+    ) : route.page === "legal" ? (
+      <LegalPage type={route.type} />
+    ) : (
+      <App />
+    )}
   </React.StrictMode>,
 );
