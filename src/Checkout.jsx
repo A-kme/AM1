@@ -6,6 +6,7 @@ import {
   ShieldCheck,
   Tag,
 } from "@phosphor-icons/react";
+import { normalizeIndianMobile } from "./phone.js";
 import "./checkout.css";
 
 const BASE_PRICE = 1999;
@@ -119,7 +120,7 @@ export function CheckoutPage() {
     const next = {};
     if (details.name.trim().length < 2) next.name = "Please enter your full name.";
     if (!/^\S+@\S+\.\S+$/.test(details.email.trim())) next.email = "Please enter a valid email address.";
-    if (!/^\d{10}$/.test(details.phone.replace(/\D/g, ""))) next.phone = "Please enter a valid 10-digit mobile number.";
+    if (!/^\d{10}$/.test(normalizeIndianMobile(details.phone))) next.phone = "Please enter a valid 10-digit mobile number.";
     if (!consent) next.consent = "Please accept the policies before continuing.";
     setErrors(next);
     return Object.keys(next).length === 0;
