@@ -160,6 +160,7 @@
 - Target remote: `am1` -> `https://github.com/harsh817/AM1.git`.
 - Push result: Direct push was denied for authenticated account `A-kme`; the branch was pushed successfully to the compatible fork `https://github.com/A-kme/AM1.git` without changing `origin` or force-pushing.
 - Pull request: https://github.com/harsh817/AM1/pull/1 against `harsh817/AM1:main`.
+- Pull-request checks: Vercel reports failure at its GitHub authorization step for the forked PR; no application build failure is reported. Repository-owner Vercel authorization is required to clear that external check.
 
 ## Existing Project Comparison
 
@@ -352,9 +353,9 @@ Work completed:
 Evidence or files checked:
 - Staged diff/stat/check, commit result, GitHub authentication/repository relationship, push output, and pull-request URL.
 Questions or TBDs:
-- None; target maintainers can now review and merge the PR.
+- The target repository owner must authorize Vercel for the forked PR check; local tests and the production build pass.
 Next skill focus:
 - Complete.
 ## Open Questions And TBDs
 
-- None.
+- Vercel's GitHub integration needs authorization from the target repository owner for this forked PR. This is an external repository configuration gap, not a failing application test or build.
