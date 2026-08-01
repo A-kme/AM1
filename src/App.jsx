@@ -130,7 +130,7 @@ function StickyBuyBar() {
     <aside className={`sticky-buy-bar ${visible ? "visible" : ""}`} aria-hidden={!visible}>
       <div className="sticky-buy-inner">
         <div className="sticky-buy-offer">
-          <strong>{"\u20B9"}1,999 <small>+ GST</small></strong>
+          <strong>{"\u20B9"}1,900 <small>+ GST</small></strong>
           <span>One-time payment</span>
         </div>
         <div className="sticky-buy-countdown">
@@ -492,7 +492,10 @@ function ProductIntro() {
           <figcaption>Personalized for you &middot; Delivered within 48 hours</figcaption>
         </figure>
         <div className="product-copy">
-          <p className="product-price">{"\u20B9"}1,999 + GST</p>
+          <p className="product-price">
+            <del>{"\u20B9"}25,000</del>
+            <span>{"\u20B9"}1,900 + GST</span>
+          </p>
           <p className="product-saving">Save 33%- 80% affordable than a single stylist session, same depth of analysis</p>
           <p className="product-includes">Everything included:</p>
           <ul>
@@ -542,7 +545,7 @@ function FAQ() {
         <div>
           <h2>Stop guessing before your next haircut or purchase.</h2>
           <p>Get a complete head-to-toe plan built for your face, body, skin tone, routine and budget.</p>
-          <div className="price-line"><strong>{"\u20B9"}1,999</strong><span>One-time payment</span></div>
+          <div className="price-line"><strong>{"\u20B9"}1,900</strong><span>One-time payment</span></div>
           <Button light>Get Your Personalized Report Now</Button>
           <p className="delivery-proof"><ShieldCheck size={20} weight="regular" /> Delivered within 48 hours after your assessment.</p>
         </div>

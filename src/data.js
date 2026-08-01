@@ -26,7 +26,7 @@ export const comparisonRows = [
   },
   {
     title: "Cost",
-    report: "\u20B91,999",
+    report: "\u20B91,900",
     generic: "'Free' advice that wastes money on wrong purchases.",
     note: "A personal stylist can cost \u20B910,000-\u20B915,000 per session.",
   },

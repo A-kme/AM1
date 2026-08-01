@@ -125,7 +125,7 @@
 
 - Fixes:
   - Corrected trusted server bump pricing/title from stale INR 799 to the approved INR 499 `20-Minute Style Review Call + Flirting Guide`.
-  - Updated server total expectations to subtotal INR 2,498, GST INR 449.64, total INR 2,947.64, and 294,764 paise.
+  - Updated server total expectations to subtotal INR 2,399, GST INR 431.82, total INR 2,830.82, and 283,082 paise after the approved base-price change to INR 1,900.
   - Repaired mobile approach-panel selectors and removed dead problem-testimonial placeholder CSS.
 - Refactors:
   - Added pure `src/checkout-config.js` as the single owner for base price, GST rate, and bump identity/title/price.
