@@ -5,7 +5,7 @@
 - Feature: AttractiveMen landing-page visual polish and checkout offer cleanup.
 - Source request: Ship the accumulated approved prototype changes to `harsh817/AM1` through a pull request.
 - Related documents: `AGENTS.md`, `design-qa.md`.
-- Current status: Implementation and verification complete; final diff review and delivery remain.
+- Current status: Delivered in pull request https://github.com/harsh817/AM1/pull/1.
 
 ## Feature Target
 
@@ -155,11 +155,11 @@
 
 ## Commit And Push
 
-- Branch: `codex/attractivemen-landing-checkout-polish` (planned).
-- Commit: Pending.
-- Remote: `am1` -> `https://github.com/harsh817/AM1.git`.
-- Push result: Pending.
-- Pull request: Planned against `harsh817/AM1:main`; not yet created.
+- Branch: `codex/attractivemen-landing-checkout-polish`.
+- Feature commit: `f5b37c6` (`Polish AttractiveMen landing and checkout`).
+- Target remote: `am1` -> `https://github.com/harsh817/AM1.git`.
+- Push result: Direct push was denied for authenticated account `A-kme`; the branch was pushed successfully to the compatible fork `https://github.com/A-kme/AM1.git` without changing `origin` or force-pushing.
+- Pull request: https://github.com/harsh817/AM1/pull/1 against `harsh817/AM1:main`.
 
 ## Existing Project Comparison
 
@@ -171,6 +171,8 @@
 - Date: 2026-08-01.
 - Change: Created delivery plan after inspecting local state and AM1 history.
 - Reason: The requested PR target is ahead of the local base with payment integration that must be preserved.
+- Change: Delivered the verified feature through an `A-kme/AM1` fork after direct target push was denied.
+- Reason: Preserve the requested target and PR workflow without requiring direct write access to `harsh817/AM1`.
 
 ## Routing Log
 
@@ -340,7 +342,19 @@ Questions or TBDs:
 - Only GitHub push authorization remains to be proven during delivery.
 Next skill focus:
 - Stage only the reviewed files, commit the feature branch, push it to `am1`, and open the pull request against `main`.
+
+### $commit-and-push -> complete
+Status: done
+Work completed:
+- Created feature commit `f5b37c6` from the reviewed file set.
+- Confirmed direct target push was denied, created the compatible `A-kme/AM1` fork, and pushed the feature branch without force-push.
+- Opened https://github.com/harsh817/AM1/pull/1 against `main`.
+Evidence or files checked:
+- Staged diff/stat/check, commit result, GitHub authentication/repository relationship, push output, and pull-request URL.
+Questions or TBDs:
+- None; target maintainers can now review and merge the PR.
+Next skill focus:
+- Complete.
 ## Open Questions And TBDs
 
-- TBD: Whether GitHub credentials can push to `harsh817/AM1`; verify during `$commit-and-push` and use a fork-based PR only if direct branch push is denied.
-- Question: None currently blocking implementation.
+- None.
