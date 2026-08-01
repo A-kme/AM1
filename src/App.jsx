@@ -333,7 +333,7 @@ function ApproachSection() {
                 loading="lazy"
               />
             </figure>
-            <p className="approach-method">and turned it into a structured system: <strong>the Style Analysis Method</strong>. The same depth of personalization, without the {"\u20B9"}15,000 expense and the multi-week wait for an appointment.</p>
+            <p className="approach-method">and turned it into a structured system: <strong>the Style Analysis Method. The</strong> same depth of personalization, without the {"\u20B9"}15,000 expense and the multi-week wait for an appointment.</p>
           </div>
           <h3>From your photos and a few basic measurements, our stylist analyses:</h3>
           <div className="approach-analysis-grid">
