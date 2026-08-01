@@ -20,16 +20,16 @@ test("calculates trusted server-side totals from selected bump ids", () => {
 
   assert.deepEqual(calculateCheckoutTotals(["call"]), {
     basePrice: 1999,
-    bumpsTotal: 799,
-    subtotal: 2798,
-    gst: 503.64,
-    total: 3301.64,
-    amountPaise: 330164,
+    bumpsTotal: 499,
+    subtotal: 2498,
+    gst: 449.64,
+    total: 2947.64,
+    amountPaise: 294764,
     selectedBumps: [
       {
         id: "call",
-        title: "20-Minute Style Review Call",
-        price: 799,
+        title: "20-Minute Style Review Call + Flirting Guide",
+        price: 499,
       },
     ],
   });
