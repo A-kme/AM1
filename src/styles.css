@@ -1558,18 +1558,19 @@ a {
 
 .product-copy > p.product-price {
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   align-items: baseline;
-  gap: 8px 18px;
+  gap: 12px;
   color: var(--ink);
-  font-size: clamp(48px, 6.2vw, 84px);
+  font-size: clamp(36px, 4vw, 56px);
   font-weight: 800;
   line-height: 1.15;
+  white-space: nowrap;
 }
 
 .product-price del {
   color: var(--muted);
-  font-size: 0.46em;
+  font-size: 0.58em;
   font-weight: 600;
   text-decoration-color: #b66c64;
   text-decoration-thickness: 3px;
@@ -2354,7 +2355,8 @@ body.has-sticky-buy {
   }
 
   .product-copy > p.product-price {
-    font-size: 48px;
+    gap: 9px;
+    font-size: 34px;
     line-height: 1.1;
   }
 
